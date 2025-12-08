@@ -4,10 +4,11 @@ import TodoCounter from "../components/TodoCounter/TodoCounter"
 import TodoSearch from "../components/TodoSearch/TodoSearch"
 import TodoList from "../components/TodoList/TodoList"
 import CreateTodoButton from "../components/CreateTodoButton/CreateTodoButton"
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
 import "./App.css"
 
 const AppUi = ({
-    loading,
+ /*    loading,
     error,
     completedTodos,
     totalTodos,
@@ -16,7 +17,7 @@ const AppUi = ({
     setSearchValue,
     searchedTodos,
     completeTodo,
-    deleteTodo
+    deleteTodo */
 }) => {
   return (
     <div className="App">
@@ -24,11 +25,12 @@ const AppUi = ({
       TotalTodos={totalTodos} 
       Completed={completedTodos}
       allTodosCompleted={allTodosCompleted}
+      loading={loading}
       />
       <TodoSearch searchValue={searchValue}  setSearchValue={setSearchValue} />
 
       <TodoList>
-        {loading && <p>Estamos cargando...</p>}
+        {loading && <LoadingSpinner totalTodos={totalTodos}/>}
         {error && <p>Hubo un error!!</p>}
         {(!loading && searchedTodos.length == 0) && <p>Crea tu Primer Todo!!</p>}
         {searchedTodos.map((todo)=>(
