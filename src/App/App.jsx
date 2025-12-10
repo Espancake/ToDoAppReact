@@ -1,21 +1,9 @@
 import AppUi from "./AppUi"
 import useLocalStorage from "../hooks/useLocalStorage"
 import "./app.css"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { TodoProvider } from "../TodoContext/TodoContext"
 
-
-/* const defaultTodos = [
-  {text: "cortar cebolla", completed: true},
-  {text: "lloras hoy", completed: false},
-  {text: "conseguir un trabajo", completed: false},
-  {text: "ser fullstack", completed: false},
-  {text: "crear portfolio", completed: false},
-];
- */
-
-/* localStorage.setItem('TODOS_V1', defaultTodos); */
-
-/* localStorage.removeItem("TODOS_V1"); */
 
 function App() {
   const {
@@ -61,18 +49,9 @@ function App() {
   const allTodosCompleted = !loading && todos.length > 0 && todos.every(todo => todo.completed);
 
   return(
-    <AppUi
-/*       error={error}
-      loading={loading}
-      completedTodos={completedTodos}
-      totalTodos={totalTodos}
-      allTodosCompleted={allTodosCompleted}
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-      searchedTodos={searchedTodos}
-      completeTodo={completeTodo}
-      deleteTodo={deleteTodo} */
-    />
+    <TodoProvider>
+      <AppUi/>
+    </TodoProvider>
   )
 }
 

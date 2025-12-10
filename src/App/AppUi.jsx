@@ -5,6 +5,9 @@ import TodoSearch from "../components/TodoSearch/TodoSearch"
 import TodoList from "../components/TodoList/TodoList"
 import CreateTodoButton from "../components/CreateTodoButton/CreateTodoButton"
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner'
+import Modal from '../components/Modal/Modal'
+import { TodoContext } from '../TodoContext/TodoContext'
+import TodoForm from '../components/TodoForm/TodoForm'
 import "./App.css"
 
 const AppUi = ({
@@ -19,19 +22,25 @@ const AppUi = ({
     completeTodo,
     deleteTodo */
 }) => {
+
+    const {
+    loading,
+    error,
+    searchedTodos,
+    completeTodo,
+    deleteTodo,
+    openModal,
+    setOpenModal,
+    totalTodos,
+  } = React.useContext(TodoContext);
   return (
     <div className="App">
-      <TodoCounter 
-      TotalTodos={totalTodos} 
-      Completed={completedTodos}
-      allTodosCompleted={allTodosCompleted}
-      loading={loading}
-      />
-      <TodoSearch searchValue={searchValue}  setSearchValue={setSearchValue} />
+      <TodoCounter/>
+      <TodoSearch/>
 
       <TodoList>
         {loading && <LoadingSpinner totalTodos={totalTodos}/>}
-        {error && <p>Hubo un error!!</p>}
+        {error && <TodosError/>}
         {(!loading && searchedTodos.length == 0) && <p>Crea tu Primer Todo!!</p>}
         {searchedTodos.map((todo)=>(
           <TodoItem 
@@ -44,8 +53,15 @@ const AppUi = ({
         ))}
       </TodoList>
 
-     <CreateTodoButton/>
+      <CreateTodoButton
+        setOpenModal={setOpenModal}
+      />
 
+      {openModal && (
+        <Modal>
+          <TodoForm/>
+        </Modal>
+      )}
 
     </div>
   )
